@@ -1,4 +1,4 @@
-package com.danielviveiros.config;
+package com.contentbowl.commons.guice;
 
 import java.util.logging.Logger;
 
@@ -12,6 +12,11 @@ import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 
+/**
+ * 
+ * @author daniel
+ *
+ */
 public class GuiceServletConfig extends GuiceServletContextListener {
 	
 	private static Logger logger = Logger.getLogger(GuiceServletConfig.class.toString());

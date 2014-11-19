@@ -6,15 +6,14 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import com.contentbowl.commons.test.AbstractTestCase;
 import com.danielviveiros.dao.GreetingDAO;
 import com.danielviveiros.dao.ObjectifyGreetingDAO;
 import com.danielviveiros.entity.Greeting;
-import com.danielviveiros.test.AbstractTestClass;
 import com.google.appengine.api.users.User;
 
-public class GreetingDAOTest extends AbstractTestClass {
+public class GreetingDAOTest extends AbstractTestCase {
 	
-	@Override
 	public void setup() {
 		dao = super.getInstance(ObjectifyGreetingDAO.class);
 	}
