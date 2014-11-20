@@ -3,11 +3,12 @@ package com.contentbowl.commons.test;
 import org.junit.After;
 import org.junit.Before;
 
-import com.contentbowl.commons.guice.CommonModule;
+import com.contentbowl.commons.guice.GuiceServletConfig;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalMemcacheServiceTestConfig;
+import com.google.appengine.tools.development.testing.LocalModulesServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-import com.google.inject.Guice;
+import com.google.appengine.tools.development.testing.LocalTaskQueueTestConfig;
 import com.google.inject.Injector;
 
 /**
@@ -24,11 +25,12 @@ public abstract class AbstractTestCase {
 	 * Initializes the helper
 	 */
 	final LocalServiceTestHelper helper = new LocalServiceTestHelper(
+			new LocalTaskQueueTestConfig(),
 			new LocalDatastoreServiceTestConfig(),
 			new LocalMemcacheServiceTestConfig());
 	
 	public AbstractTestCase() {
-		this.injector = Guice.createInjector(new CommonModule());
+		this.injector = GuiceServletConfig.createInjector();
 	}
 	
 	/**

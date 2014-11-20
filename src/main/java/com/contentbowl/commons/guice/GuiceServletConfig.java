@@ -1,38 +1,52 @@
 package com.contentbowl.commons.guice;
 
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.danielviveiros.api.CommonResource;
-import com.danielviveiros.dao.GreetingDAO;
-import com.danielviveiros.dao.ObjectifyGreetingDAO;
-import com.danielviveiros.resources.GuestbookServlet;
-import com.danielviveiros.resources.SignGuestbookServlet;
+import com.contentbowl.commons.configuration.ConfigurationService;
+import com.contentbowl.commons.configuration.ConfigurationServiceFactory;
+import com.contentbowl.sample.greetings.config.GreetingsModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
 import com.google.inject.servlet.GuiceServletContextListener;
-import com.google.inject.servlet.ServletModule;
 
 /**
+ * ServletConfig that initializes Guice and all its modules
  * 
- * @author daniel
- *
+ * @author Daniel Viveiros
  */
 public class GuiceServletConfig extends GuiceServletContextListener {
 	
-	private static Logger logger = Logger.getLogger(GuiceServletConfig.class.toString());
+	private static ConfigurationService guiceConfService;
+	private static Injector injector;
+	
+	static {
+		guiceConfService = ConfigurationServiceFactory.getConfigurationService("guice");
+	}
+	
+	public static Injector createInjector() {
+		if (injector == null) {
+			List<String> moduleClasses = guiceConfService.getValues("modules");
+			List<Module> lModules = new ArrayList<Module>();
+			for (String moduleClass: moduleClasses) {
+				try {
+					lModules.add((Module) Class.forName(moduleClass).newInstance() );
+				} catch (InstantiationException | IllegalAccessException
+						| ClassNotFoundException e) {
+					throw new RuntimeException( "Error initializing guice injector", e );
+				}
+			}
+			
+			injector = Guice.createInjector(lModules);
+		}
+		
+		return injector;
+	}
 
 	@Override
 	protected Injector getInjector() {
-		logger.info("GuiceServletConfig.getInjector()");
-		return Guice.createInjector(new CommonModule(), new ServletModule() {
-			@Override
-		    protected void configureServlets() {
-				serve("/guestbook").with(GuestbookServlet.class);
-				serve("/sign").with(SignGuestbookServlet.class);
-				bind(CommonResource.class);
-				bind(GreetingDAO.class).to(ObjectifyGreetingDAO.class);
-		    }
-			
-		});
+		return GuiceServletConfig.createInjector();
 	}
+	
 }

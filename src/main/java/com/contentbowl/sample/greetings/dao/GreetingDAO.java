@@ -1,8 +1,8 @@
-package com.danielviveiros.dao;
+package com.contentbowl.sample.greetings.dao;
 
 import java.util.List;
 
-import com.danielviveiros.entity.Greeting;
+import com.contentbowl.sample.greetings.entity.Greeting;
 
 public interface GreetingDAO {
 	

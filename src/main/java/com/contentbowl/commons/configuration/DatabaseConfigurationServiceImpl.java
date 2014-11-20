@@ -1,59 +1,47 @@
 package com.contentbowl.commons.configuration;
 
-import java.util.List;
+import java.sql.SQLException;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.contentbowl.commons.tenant.TenantService;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.google.inject.Inject;
 
 /**
  * Configuration services that uses a relational database (such as CloudSQL) to get a configuration property 
  * @author Daniel Viveiros
  */
-public class DatabaseConfigurationServiceImpl implements ConfigurationService {
+public class DatabaseConfigurationServiceImpl extends AbstractConfigurationService {
+	
+	@Inject
+	private TenantService tenantService;
+	
+	@Inject
+	private ConfigurationValueDAO confValueDAO;
 
 	@Override
 	public String get(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String get(String key, String defaultValue) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getInt(String key) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getInt(String key, int defaultValue) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean getBoolean(String key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean getBoolean(String key, boolean defaultValue) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<String> getValues(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setCategory(String category) {
-		// TODO Auto-generated method stub
 		
+		//gets the current namespace
+		String tenant = tenantService.currentTenant();
+		String value = null;
+		
+		try {
+			value = confValueDAO.findConfigurationValue(key, tenant);
+			
+			//if not found for current tenant, try to find the configuration in the default namespace
+			if (StringUtils.isEmpty(value)) {
+				value = confValueDAO.findConfigurationValue(key, TenantService.DEFAULT_TENANT);
+			}
+		} catch ( SQLException exc ) {
+			throw new RuntimeException( "Error reading configuration from database: key = " + key +
+					", tenant = " + tenant );
+		}
+		
+		return value;
 	}
+	
 
 }

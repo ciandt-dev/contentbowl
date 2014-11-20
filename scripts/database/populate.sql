@@ -29,3 +29,18 @@ commit;
 insert into `content_bowl`.`CONFIGURATION_CATEGORY` (ID_CONF_CATEGORY, DS_MNEMONIC, DS_DESCRIPTION)
 	values (0, 'general', 'General configuration. Used for aggregating basic configuration attributes');
 
+commit;
+
+
+#populate configuration attributes
+insert into `content_bowl`.`CONFIGURATION_ATTRIBUTE`
+	(ID_CONF_ATTRIBUTE, ID_CONF_CATEGORY, DS_MNEMONIC, DS_DESCRIPTION, DS_TYPE, IS_MULTIVALUED, IS_REQUIRED)
+	values (0,0,'app_name','Application Name','S','N','Y');
+
+commit;
+
+#populate configuration values
+insert into `content_bowl`.`CONFIGURATION_VALUE` (ID_CONF_ATTRIBUTE, ID_TENANT, DS_VALUE)
+	values (0,0,'Content Bowl');
+
+commit;

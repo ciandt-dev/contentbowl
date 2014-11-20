@@ -1,6 +1,6 @@
-package com.danielviveiros.dao;
+package com.contentbowl.sample.greetings.dao;
 
-import com.danielviveiros.entity.Greeting;
+import com.contentbowl.sample.greetings.entity.Greeting;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;

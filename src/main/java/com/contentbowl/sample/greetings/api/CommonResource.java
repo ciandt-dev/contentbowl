@@ -1,4 +1,4 @@
-package com.danielviveiros.api;
+package com.contentbowl.sample.greetings.api;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.danielviveiros.dao.GreetingDAO;
-import com.danielviveiros.entity.Greeting;
+import com.contentbowl.sample.greetings.dao.GreetingDAO;
+import com.contentbowl.sample.greetings.entity.Greeting;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

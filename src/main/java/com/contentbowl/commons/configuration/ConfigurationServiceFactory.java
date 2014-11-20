@@ -2,10 +2,10 @@ package com.contentbowl.commons.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.MissingResourceException;
 
-import com.google.appengine.api.memcache.MemcacheService;
-import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.contentbowl.commons.guice.CommonsModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 /**
  * Factory for configuration services. This factory is the only one that doesn't use dependency injection
@@ -21,6 +21,9 @@ public class ConfigurationServiceFactory {
 	private static final String CONF_CATEGORY = "configuration";
 	private static final String DEFAULT_CATEGORY = "default";
 	
+	/** Guice Injector */
+	private static Injector injector; 
+	
 	/** Default implementation of ConfigurationService */
 	private static ConfigurationService configurationProperties = null;
 	
@@ -30,8 +33,11 @@ public class ConfigurationServiceFactory {
 	static {
 		_confServMap = new HashMap<String,ConfigurationService>();
 		
+		//injector
+		injector = Guice.createInjector(new CommonsModule());
+		
 		//instantiates the configuration properties
-		configurationProperties = new BundleConfigurationServiceImpl();
+		configurationProperties = injector.getInstance(BundleConfigurationServiceImpl.class);
 		configurationProperties.setCategory(ConfigurationServiceFactory.CONF_CATEGORY);
 		
 		//puts the configuration properties in the cache
@@ -82,7 +88,7 @@ public class ConfigurationServiceFactory {
 			}
 			
 			try {
-				confServ = (ConfigurationService) Class.forName(strImplementation).newInstance();
+				confServ = (ConfigurationService) injector.getInstance(Class.forName(strImplementation));
 				confServ.setCategory(category); 
 			} catch (Exception e) {
 				throw new InvalidConfigurationServiceException(category, e);

@@ -1,12 +1,12 @@
-package com.danielviveiros.dao;
+package com.contentbowl.sample.greetings.dao;
 
-import static com.danielviveiros.dao.OfyService.ofy;
+import static com.contentbowl.sample.greetings.dao.OfyService.ofy;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.danielviveiros.entity.Greeting;
+import com.contentbowl.sample.greetings.entity.Greeting;
 import com.google.appengine.api.memcache.ErrorHandlers;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;

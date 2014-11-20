@@ -2,6 +2,8 @@ package com.contentbowl.commons.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import com.contentbowl.commons.configuration.ConfigurationService;
 import com.contentbowl.commons.configuration.ConfigurationServiceFactory;
@@ -15,8 +17,10 @@ public abstract class AbstractCloudSQLDAO extends AbstractDAO {
 	
 	private static final String LOCAL_DATABASE_CONF = "database_local";
 	private static final String REMOTE_DATABASE_CONF = "database_remote";
+	private static final String QUERY_CONF = "sql_queries";
 	
 	private static ConfigurationService databaseConfService;
+	private static ConfigurationService queryConfService;
 	private static Boolean isRemote;
 	
 	static {
@@ -31,6 +35,9 @@ public abstract class AbstractCloudSQLDAO extends AbstractDAO {
 			databaseConfService = ConfigurationServiceFactory.getConfigurationService( LOCAL_DATABASE_CONF );
 			isRemote = false;
 		}
+		
+		//query services
+		queryConfService = ConfigurationServiceFactory.getConfigurationService(QUERY_CONF);
 	}
 	
 	/**
@@ -40,17 +47,28 @@ public abstract class AbstractCloudSQLDAO extends AbstractDAO {
 		
 		String className = databaseConfService.get("jdbc_driver");
 		String url = databaseConfService.get("jdbc_url");
+		String user = databaseConfService.get("db_user");
+		String pwd = databaseConfService.get("db_password");
 		
 		Connection conn = null;
 		
 		try {
 			Class.forName( className );
-			conn = DriverManager.getConnection(url);
+			conn = DriverManager.getConnection(url, user, pwd);
 		} catch (Exception exc) {
 			throw new CouldNotCreateConnectionException(className, url, exc);
 		}
 		
 		return conn;
+	}
+	
+	/**
+	 * Prepares a statement
+	 * @throws SQLException 
+	 */
+	protected PreparedStatement prepareStatement( String queryKey ) throws SQLException {
+		String strQuery = queryConfService.get(queryKey);
+		return createConnection().prepareStatement(strQuery);
 	}
 	
 	/**

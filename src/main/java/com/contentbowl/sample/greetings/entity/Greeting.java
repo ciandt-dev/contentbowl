@@ -1,4 +1,4 @@
-package com.danielviveiros.entity;
+package com.contentbowl.sample.greetings.entity;
 
 import java.util.Date;
 

@@ -48,5 +48,10 @@ public class ConfigurationServiceTest extends AbstractTestCase {
 		Assert.assertEquals(confServ.getClass().getName(), defaultConfServ.getClass().getName());
 	}
 	
-	
+	@Test
+	public void shouldPropagateConfigurationReadingToDefaultTenant() throws Exception {
+		ConfigurationService confServ = ConfigurationServiceFactory.getConfigurationService();
+		String strAppName = confServ.get("app_name");
+		Assert.assertEquals( "Content Bowl", strAppName);
+	}
 }

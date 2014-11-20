@@ -42,6 +42,6 @@
 	</filter-mapping>
 
 	<listener>
-		<listener-class>com.danielviveiros.config.GuiceServletConfig</listener-class>
+		<listener-class>com.contentbowl.commons.guice.GuiceServletConfig</listener-class>
 	</listener>
 </web-app>
