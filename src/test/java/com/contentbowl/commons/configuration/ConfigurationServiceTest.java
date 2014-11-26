@@ -9,7 +9,6 @@ import com.contentbowl.commons.test.AbstractTestCase;
 
 public class ConfigurationServiceTest extends AbstractTestCase {
 	
-
 	/**
 	 * Setup tasks
 	 */

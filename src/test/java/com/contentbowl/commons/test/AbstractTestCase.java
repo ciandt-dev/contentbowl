@@ -3,10 +3,9 @@ package com.contentbowl.commons.test;
 import org.junit.After;
 import org.junit.Before;
 
-import com.contentbowl.commons.guice.GuiceServletConfig;
+import com.contentbowl.commons.guice.InjectionUtils;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalMemcacheServiceTestConfig;
-import com.google.appengine.tools.development.testing.LocalModulesServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.appengine.tools.development.testing.LocalTaskQueueTestConfig;
 import com.google.inject.Injector;
@@ -30,7 +29,7 @@ public abstract class AbstractTestCase {
 			new LocalMemcacheServiceTestConfig());
 	
 	public AbstractTestCase() {
-		this.injector = GuiceServletConfig.createInjector();
+		this.injector = InjectionUtils.createInjector();
 	}
 	
 	/**

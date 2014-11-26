@@ -49,16 +49,17 @@ public class ConfigurationValueDAO extends AbstractCloudSQLDAO {
 				cache.put( cacheKey, strResult);
 			}
 		} finally {
-			Connection conn = pstmt.getConnection();
-			if (conn != null) {
-				conn.close();
-			}
-			if (pstmt != null) {
-				pstmt.close();
-			}
 			if (rset != null) {
 				rset.close();
 			}
+			if (pstmt != null) {
+				Connection conn = pstmt.getConnection();
+				if (conn != null) {
+					conn.close();
+				}
+				pstmt.close();
+			}
+			
 		}
 		
 		return strResult;

@@ -2,11 +2,9 @@ package com.contentbowl.commons.configuration;
 
 import java.sql.SQLException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.contentbowl.commons.tenant.TenantService;
-import com.google.appengine.api.memcache.MemcacheService;
-import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.inject.Inject;
 
 /**
@@ -37,7 +35,7 @@ public class DatabaseConfigurationServiceImpl extends AbstractConfigurationServi
 			}
 		} catch ( SQLException exc ) {
 			throw new RuntimeException( "Error reading configuration from database: key = " + key +
-					", tenant = " + tenant );
+					", tenant = " + tenant, exc );
 		}
 		
 		return value;

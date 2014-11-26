@@ -1,6 +1,6 @@
 package com.contentbowl.commons.tenant;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.appengine.api.NamespaceManager;
 import com.google.inject.Singleton;
