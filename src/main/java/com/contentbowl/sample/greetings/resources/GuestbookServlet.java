@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.contentbowl.commons.configuration.ConfigurationService;
+import com.contentbowl.commons.configuration.ConfigurationServiceFactory;
 import com.contentbowl.sample.greetings.dao.GreetingDAO;
 import com.contentbowl.sample.greetings.entity.Greeting;
 import com.google.appengine.api.users.User;
@@ -24,6 +26,8 @@ public class GuestbookServlet extends HttpServlet {
 	@Inject
 	private GreetingDAO greetingDao;
 	
+	private ConfigurationService confService;
+	
 	@Inject
 	private Logger logger;
 	
@@ -31,6 +35,9 @@ public class GuestbookServlet extends HttpServlet {
 			throws IOException, ServletException {
 		
 		logger.info( "Executing GuestbookServlet" );
+		
+		confService = ConfigurationServiceFactory.getConfigurationService();
+		System.out.println( confService.get("app.name"));
 		
 		//read greetings
 	    List<Greeting> greetings = greetingDao.findGreetings();

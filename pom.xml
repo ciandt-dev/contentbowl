@@ -178,6 +178,9 @@
 						<jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8001,server=y,suspend=n</jvmFlag>
 						<jvmFlag>-Dappengine.generated.dir=../../</jvmFlag>
 					</jvmFlags>
+					<additionalClasspathElements>
+	      				<additionalClasspathElement>/Users/dviveiros/git/contentbowl/lib_local/mysql-connector-java-5.1.34-bin.jar</additionalClasspathElement>
+	    			</additionalClasspathElements>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -187,7 +190,7 @@
   				<configuration>
 	    			<additionalClasspathElements>
 	      				<additionalClasspathElement>./lib_local/mysql-connector-java-5.1.34-bin.jar</additionalClasspathElement>
-	      				<additionalClasspathElement>./src/main/java</additionalClasspathElement>
+	      				<additionalClasspathElement>./src/main/webapp/WEB-INF/classes</additionalClasspathElement>
 	    			</additionalClasspathElements>
   				</configuration>
 			</plugin>

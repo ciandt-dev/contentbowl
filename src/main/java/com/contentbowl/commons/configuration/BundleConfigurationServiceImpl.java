@@ -1,5 +1,6 @@
 package com.contentbowl.commons.configuration;
 
+import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -37,7 +38,7 @@ public class BundleConfigurationServiceImpl extends AbstractConfigurationService
 	@Override
     public void setCategory(String category) {
 		super.setCategory(category);
-		this.bundle = ResourceBundle.getBundle( category );
+		this.bundle = ResourceBundle.getBundle( category, Locale.ENGLISH );
 	}
 
 }
