@@ -37,7 +37,7 @@ public class GuestbookServlet extends HttpServlet {
 		logger.info( "Executing GuestbookServlet" );
 		
 		confService = ConfigurationServiceFactory.getConfigurationService();
-		System.out.println( confService.get("app.name"));
+		logger.info( "App_name = " + confService.get("app_name") );
 		
 		//read greetings
 	    List<Greeting> greetings = greetingDao.findGreetings();

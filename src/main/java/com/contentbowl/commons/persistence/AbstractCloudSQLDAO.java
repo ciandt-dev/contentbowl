@@ -47,14 +47,18 @@ public abstract class AbstractCloudSQLDAO extends AbstractDAO {
 		
 		String className = databaseConfService.get("jdbc_driver");
 		String url = databaseConfService.get("jdbc_url");
-		String user = databaseConfService.get("db_user");
-		String pwd = databaseConfService.get("db_password");
 		
 		Connection conn = null;
 		
 		try {
 			Class.forName( className );
-			conn = DriverManager.getConnection(url, user, pwd);
+			if ( isRemote ) {
+				conn = DriverManager.getConnection(url);
+			} else {
+				String user = databaseConfService.get("db_user");
+				String pwd = databaseConfService.get("db_password");
+				conn = DriverManager.getConnection(url, user, pwd);
+			}
 		} catch (Exception exc) {
 			throw new CouldNotCreateConnectionException(className, url, exc);
 		}
