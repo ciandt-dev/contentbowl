@@ -2,7 +2,6 @@ package com.contentbowl.commons.social;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,8 +39,10 @@ public class GooglePlusUtilsMock extends GooglePlusUtils {
      * Convert a JSON file to an activity
      */
     private Activity fromJsonToActivity( String json ) {
+        Activity activity = new Activity();
+        
         //TODO: implement this
-        return new Activity();
+        return activity;
     }
     
     /**
