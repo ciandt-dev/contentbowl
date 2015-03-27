@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.contentbowl.commons.configuration.ConfigurationService;
-import com.contentbowl.commons.configuration.ConfigurationServiceFactory;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -25,8 +23,6 @@ public class GooglePlusUtils {
     
     /** Singleton Instance */
     private static GooglePlusUtils _instance;
-    
-    private static final String GOOGLE_DRIVE_URL_REGEX = "https?://(drive|docs)\\.google\\.com[^\\s]*/(spreadsheets?|file|drawings?|documents?|presentations?)/[^\\s]*";
 
     /**
      * Constructor
@@ -122,12 +118,12 @@ public class GooglePlusUtils {
     }
 
     /**
-     * Initialization
+     * Google Plus initialization
      * 
      * @param googleApiKey
      * @param applicationName
      */
-    private Plus initialize(String apiKey) {
+    protected Plus initialize(String apiKey) {
         GoogleCredential credential = new GoogleCredential();
         // initializes Google Plus
         JsonFactory jsonFactory = new JacksonFactory();

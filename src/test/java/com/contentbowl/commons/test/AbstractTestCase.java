@@ -3,6 +3,8 @@ package com.contentbowl.commons.test;
 import org.junit.After;
 import org.junit.Before;
 
+import com.contentbowl.commons.configuration.ConfigurationService;
+import com.contentbowl.commons.configuration.ConfigurationServiceFactory;
 import com.contentbowl.commons.guice.InjectionUtils;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalMemcacheServiceTestConfig;
@@ -18,7 +20,8 @@ import com.google.inject.Injector;
  */
 public abstract class AbstractTestCase {
 	
-	private Injector injector; 
+	private Injector injector;
+	private ConfigurationService confService;
 	
 	/**
 	 * Initializes the helper
@@ -30,6 +33,7 @@ public abstract class AbstractTestCase {
 	
 	public AbstractTestCase() {
 		this.injector = InjectionUtils.createInjector();
+		confService = ConfigurationServiceFactory.getConfigurationService("test");
 	}
 	
 	/**
@@ -57,6 +61,20 @@ public abstract class AbstractTestCase {
 	protected <T> T getInstance(Class<T> type) {
         return this.injector.getInstance(type);
     }
+	
+	/**
+	 * Get a test property
+	 */
+	protected String getTestProperty( String key ) {
+	    return confService.get(key);
+	}
+	
+	/**
+	 * Return if the tests are configured to run in the online mode or not
+	 */
+	protected Boolean isOnline() {
+	    return "true".equals( getTestProperty( "is_online") );
+	}
 		
 
 }
