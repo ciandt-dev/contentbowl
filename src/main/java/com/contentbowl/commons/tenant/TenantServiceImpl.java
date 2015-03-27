@@ -17,7 +17,12 @@ public class TenantServiceImpl implements TenantService {
 	public String currentTenant() {
 		//gets the current namespace
 		String tenant = null;
-		tenant = NamespaceManager.get();
+		
+		try {
+		    tenant = NamespaceManager.get();
+		} catch ( Exception exc ) {
+		    return TenantService.DEFAULT_TENANT;
+		}
 		
 		/*
 		try {
