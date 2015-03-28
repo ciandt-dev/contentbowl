@@ -2,7 +2,7 @@ package com.contentbowl.model;
 
 /**
  * Raw content saved from the original source. This entity is more to backup some data and
- * enable to create some scripts to process again some data 
+ * enable to create some scripts to process it 
  * 
  * @author <a href="mailto:viveiros@ciandt.com">Daniel Viveiros</a>
  */
@@ -12,7 +12,6 @@ public class RawContent {
     private String providerMnemonic;
     private Long streamId;
     private String content;
-    
     
     public String getId() {
         return id;
